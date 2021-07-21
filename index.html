@@ -25,6 +25,7 @@
       // @ts-check
       /** Nombre de usuario atenticado por Firebase. */
       let usuario = "";
+      let avatarUser = "";
       /** Conexión al sistema de autenticación de Firebase. */
       // @ts-ignore
       const auth = firebase.auth();
@@ -40,9 +41,11 @@
         /** Recibe las características del usuario o null si no ha iniciado
          * sesión. */
         async usuarioAuth => {
-          if (usuarioAuth && usuarioAuth.email) {
+          if (usuarioAuth) {
             // Usuario aceptado.
-            usuario = usuarioAuth.email;
+            console.log("jsdjsalkdas", usuarioAuth)
+            usuario = usuarioAuth.displayName;
+            avatarUser = usuarioAuth.photoURL;
             // Muestra los mensajes del chat.
             muestraMensajes();
           } else {
@@ -64,6 +67,7 @@
          * El timestamp contiene la fecha y hora en que se agrega el registro.*/
         firestore.collection("MENSAJE").add({
           USUARIO: usuario,
+          AVATAR:avatarUser,
           // @ts-ignore
           TEXTO: texto.value.trim(),
           // @ts-ignore
@@ -91,8 +95,7 @@
                * El iterador "doc" es un registro de la base de datos. */
               querySnapshot.forEach(doc => {
                 // recupera los datos almacenados en el registro.
-                const data = doc.data();
-                
+                const data = doc.data();                
                 var d = data.TIMESTAMP.toDate(),
                 dformat = [d.getDate(), d.getMonth()+1, d.getFullYear()].join('/')+' '+
                           [d.getHours(),d.getMinutes(),d.getSeconds()].join(':');
@@ -100,7 +103,7 @@
                  * para evitar inyección de código. */
                 // @ts-ignore
                 mensajes.innerHTML += /* html */
-                  `<li><u>${cod(data.USUARIO)}</u> ${dformat}<br>${cod(data.TEXTO)}</li>`;
+                  `<li><img src=${cod(data.AVATAR)} alt=${cod(data.USUARIO)} class="avatar-user" /><u>${cod(data.USUARIO)}</u> ${dformat}<br>${cod(data.TEXTO)}</li>`;
               })
             },
             /* Función que se invoca cuando hay un error. Muestra el error. Al
