@@ -2,7 +2,9 @@
 | Tarea | Link |
 | ------ | ------ |
 | Autenticacion | [Ver tarea](https://annlozada.github.io/firebase/) |
-| GitHub | [plugins/github/README.md][PlGh] |
+| Chat | [Ver tarea](https://annlozada.github.io/chat801ALLR/)|
+
+
 ## License
 
 Ana Laura Lozada Rojas
